@@ -1,4 +1,4 @@
-# 🧬 Hetionet Biomedical Assistant
+## Hetionet Biomedical Assistant
 
 A conversational AI assistant with deep reasoning capabilities that explores the **Hetionet biomedical knowledge graph** to answer complex questions about diseases, genes, compounds, anatomy, and their relationships.
 
