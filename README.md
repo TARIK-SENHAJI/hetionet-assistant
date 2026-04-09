@@ -68,7 +68,7 @@ User Question
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/hetionet-assistant.git
+git clone https://github.com/TARIK-SENHAJI/hetionet-assistant.git
 cd hetionet-assistant
 ```
 
