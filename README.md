@@ -8,49 +8,8 @@ Built with **Streamlit**, **Mistral AI**, and **Neo4j**.
 
 ##  Architecture
 
-The system uses a **5-phase reasoning pipeline** for every user query:
+![RAG Pipeline](rag_pipeline_flowchart.png)
 
-```
-User Question
-      │
-      ▼
-[Phase 1] Query Classification
-   DIRECT ──────────────────────────────► Direct LLM Answer
-   GRAPH
-      │
-      ▼
-[Phase 2] Deep Analysis
-   Extract entities, relationships, query strategy
-      │
-      ▼
-[Phase 3] Query Generation
-   Select templates → compile Cypher queries
-      │
-      ▼
-[Phase 4] Neo4j Execution
-   Run queries → collect triplets
-      │
-      ▼
-[Phase 5] Answer Synthesis
-   Synthesize a grounded, expert answer
-```
-
-### File Structure
-
-```
-├── app.py                  # Streamlit UI + pipeline orchestration
-├── config.py               # Configuration and environment variables
-├── query_classifier.py     # Phase 1 – DIRECT vs GRAPH classification
-├── deep_analysis.py        # Phase 2 – Entity and relationship extraction
-├── query_generator.py      # Phase 3 – Template-based Cypher query generation
-├── query_executor.py       # Phase 4 – Neo4j query execution + deduplication
-├── response_generator.py   # Phase 5 – Answer synthesis
-├── neo4j_client.py         # Neo4j driver singleton
-├── build_embeddings.py     # One-time script: populate vector embeddings in Neo4j
-├── requirements.txt
-├── .env.example
-└── README.md
-```
 
 ---
 
@@ -172,14 +131,6 @@ The system routes questions to one of 5 Cypher query templates:
 | `GiG` | Gene **interacts** Gene |
 | `DrD` | Disease **resembles** Disease |
 | `CrC` | Compound **resembles** Compound |
-
----
-
-##  Known Limitations
-
-- The Neo4j singleton client (`neo4j_client.py`) is not thread-safe under high concurrency. For production with many simultaneous users, replace with a per-session connection pattern.
-- Cypher query parameters are sanitized with basic string escaping. Not intended for untrusted public input in a production environment.
-- The `build_embeddings.py` script uses `elementId()` which requires Neo4j 5.x or later.
 
 ---
 
